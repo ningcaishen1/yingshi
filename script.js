@@ -81,12 +81,12 @@ function showResourceDetails(id) {
                 if (!resource.links || resource.links.length === 0) {
                     downloadLinksDiv.innerHTML = '<p>暂无下载链接</p>';
                 } else {
-                    resource.links.forEach((link, index) => {
+                    resource.links.forEach(linkObj => {
                         const a = document.createElement('a');
-                        a.href = link;
+                        a.href = linkObj.url;
                         a.target = "_blank";
                         a.className = "download-btn";
-                        a.innerHTML = `<i class="fas fa-download"></i> 下载资源 ${index + 1}`;
+                        a.innerHTML = `<i class="fas fa-download"></i> ${linkObj.label}`;
                         downloadLinksDiv.appendChild(a);
                     });
                 }
