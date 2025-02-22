@@ -2,7 +2,8 @@
     {
         "id": "1",
         "title": "本站注重版权，如遇侵权请联系删除！",
-        "description": "本站注重版权，如遇侵权请联系删除！"
+        "description": "本站注重版权，如遇侵权请联系删除！",
+        "boldTitle": true
     },
     {
         "id": "2",
@@ -10,7 +11,8 @@
         "description": "以前的校园卡。如有需要请联系微信19200047695，以下是介绍页面。",
         "links": [
             {"url": "https://172.lot-ml.com/ProductEn/Index/fbea121f685c8fa2", "label": "流量卡介绍"}
-        ]
+        ],
+        "boldTitle": true
     },
     {
         "id": "6",

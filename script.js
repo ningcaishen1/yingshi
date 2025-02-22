@@ -44,8 +44,11 @@ function searchResources() {
             const div = document.createElement('div');
             div.className = 'resource-item';
             div.innerText = resource.title;
+            // 如果 boldTitle 为 true，添加加粗样式
+            if (resource.boldTitle) {
+                div.style.fontWeight = 'bold';
+            }
             div.onclick = () => {
-                // 保存当前状态到 URL 或 sessionStorage
                 const returnUrl = `index.html?query=${encodeURIComponent(query)}&page=${currentPage}`;
                 window.location.href = `resource.html?id=${resource.id}&return=${encodeURIComponent(returnUrl)}`;
             };
@@ -83,10 +86,15 @@ function showResourceDetails(id) {
         .then(data => {
             const resource = data.find(r => r.id == id);
             if (resource) {
-                document.getElementById('resourceTitle').innerText = resource.title;
+                const titleElement = document.getElementById('resourceTitle');
+                titleElement.innerText = resource.title;
+                // 如果 boldTitle 为 true，加粗标题
+                if (resource.boldTitle) {
+                    titleElement.style.fontWeight = 'bold';
+                }
                 document.getElementById('resourceDesc').innerText = resource.description;
                 const downloadLinksDiv = document.getElementById('downloadLinks');
-                downloadLinksDiv.innerHTML = ''; // 清空现有内容
+                downloadLinksDiv.innerHTML = '';
                 if (!resource.links || resource.links.length === 0) {
                     downloadLinksDiv.innerHTML = '<p>暂无下载链接</p>';
                 } else {
@@ -95,7 +103,7 @@ function showResourceDetails(id) {
                         a.href = linkObj.url;
                         a.target = "_blank";
                         a.className = "download-btn";
-                        a.innerHTML = `${linkObj.label}`;
+                        a.innerHTML = `<i class="fas fa-download"></i> ${linkObj.label}`;
                         downloadLinksDiv.appendChild(a);
                     });
                 }
