@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>网盘资源搜索</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- 引入图标 -->
 </head>
 <body>
-    <h1>网盘资源搜索</h1>
-    <input type="text" id="searchBox" placeholder="输入关键词搜索...">
-    <button onclick="searchResources()">搜索</button>
-    <div id="resourceList"></div>
+    <div class="container">
+        <h1>网盘资源搜索</h1>
+        <div class="search-bar">
+            <input type="text" id="searchBox" placeholder="输入关键词搜索...">
+            <button onclick="searchResources()"><i class="fas fa-search"></i> 搜索</button>
+        </div>
+        <div id="resourceList" class="resource-grid"></div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
