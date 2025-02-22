@@ -13,7 +13,7 @@ body {
     margin: 0 auto;
     padding: 20px;
     text-align: center;
-    padding-bottom: 80px; /* 为固定底部分页留空间 */
+    padding-bottom: 80px;
 }
 
 h1 {
@@ -86,6 +86,55 @@ button:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+/* 资源详情页 */
+.resource-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+/* 下载按钮 */
+.download-btn {
+    display: inline-block;
+    padding: 15px 30px; /* 稍大一些 */
+    background: linear-gradient(135deg, #28c76f, #81fbb8); /* 绿色渐变 */
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.download-btn:hover {
+    transform: translateY(-3px) scale(1.05); /* 悬停时放大并上移 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* 返回按钮 */
+.back-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #6e8efb, #a777e3); /* 与背景一致的渐变 */
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.back-btn:hover {
+    transform: translateX(-2px); /* 悬停时轻微左移 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
 /* 未找到资源提示 */
 .no-result {
     background: rgba(255, 255, 255, 0.9);
@@ -148,15 +197,23 @@ button:hover {
         font-size: 1.8em;
     }
     .pagination {
-        flex-direction: row; /* 保持水平排列 */
+        flex-direction: row;
         gap: 5px;
         padding: 5px 10px;
     }
     .pagination button {
-        padding: 6px 12px; /* 缩小按钮 */
+        padding: 6px 12px;
         font-size: 0.9em;
     }
     .pagination span {
+        font-size: 0.9em;
+    }
+    .download-btn {
+        padding: 12px 25px; /* 移动端稍小 */
+        font-size: 1em;
+    }
+    .back-btn {
+        padding: 8px 15px;
         font-size: 0.9em;
     }
 }
