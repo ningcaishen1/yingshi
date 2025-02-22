@@ -3,7 +3,7 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #6e8efb, #a777e3); /* 渐变背景 */
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
     min-height: 100vh;
     color: #333;
 }
@@ -32,8 +32,7 @@ h1 {
 
 #searchBox {
     padding: 12px 20px;
-    width: 100%;
-    max-width: 400px;
+    width: 150px; /* 调整为与按钮宽度一致 */
     border: none;
     border-radius: 25px;
     font-size: 1em;
@@ -126,29 +125,19 @@ button:hover {
     text-decoration: underline;
 }
 
-/* 响应式设计 */
-@media (max-width: 600px) {
-    .search-bar {
-        flex-direction: column;
-        align-items: center;
-    }
-    #searchBox, button {
-        width: 100%;
-        max-width: none;
-    }
-    h1 {
-        font-size: 1.8em;
-    }
-}.no-result {
+/* 未找到资源提示 */
+.no-result {
     background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color: #ff6f61; /* 与按钮颜色一致 */
+    color: #ff6f61;
     font-size: 1.2em;
     text-align: center;
     margin: 20px;
 }
+
+/* 分页样式 */
 .pagination {
     margin-top: 20px;
     display: flex;
@@ -175,4 +164,29 @@ button:hover {
 .pagination span {
     color: white;
     font-size: 1em;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    .search-bar {
+        flex-direction: column;
+        align-items: center;
+    }
+    #searchBox, button {
+        width: 100%;
+        max-width: 150px; /* 移动端保持一致宽度 */
+    }
+    h1 {
+        font-size: 1.8em;
+    }
+    .pagination {
+        flex-direction: column; /* 移动端垂直排列 */
+        gap: 5px;
+    }
+    .pagination button {
+        width: 100px; /* 按钮固定宽度 */
+    }
+    .pagination span {
+        font-size: 0.9em; /* 稍微缩小文字 */
+    }
 }
