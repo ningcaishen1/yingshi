@@ -210,8 +210,17 @@ button:hover {
         font-size: 0.9em;
     }
     .download-btn {
-        padding: 12px 25px;
-        font-size: 1em;
+        padding: 15px 30px;
+        background: linear-gradient(135deg, #28c76f, #81fbb8);
+        color: white;
+        text-decoration: none;
+        border-radius: 30px;
+        font-size: 1.1em;
+        font-weight: bold;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 10px;
+        text-align: center; /* 确保文字居中 */
     }
     .back-btn {
         padding: 8px 15px;

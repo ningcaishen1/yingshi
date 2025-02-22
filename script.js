@@ -86,7 +86,7 @@ function showResourceDetails(id) {
                         a.href = linkObj.url;
                         a.target = "_blank";
                         a.className = "download-btn";
-                        a.innerHTML = `<i class="fas fa-download"></i> ${linkObj.label}`;
+                        a.innerHTML = `${linkObj.label}`;
                         downloadLinksDiv.appendChild(a);
                     });
                 }
