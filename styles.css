@@ -13,6 +13,7 @@ body {
     margin: 0 auto;
     padding: 20px;
     text-align: center;
+    padding-bottom: 80px; /* 为固定底部分页留空间 */
 }
 
 h1 {
@@ -32,7 +33,7 @@ h1 {
 
 #searchBox {
     padding: 12px 20px;
-    width: 150px; /* 调整为与按钮宽度一致 */
+    width: 150px;
     border: none;
     border-radius: 25px;
     font-size: 1em;
@@ -85,46 +86,6 @@ button:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* 资源详情页 */
-.resource-card {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 20px auto;
-    text-align: left;
-}
-
-.download-btn {
-    display: inline-block;
-    padding: 12px 25px;
-    background-color: #28c76f;
-    color: white;
-    text-decoration: none;
-    border-radius: 25px;
-    font-size: 1em;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.download-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.back-btn {
-    display: inline-block;
-    margin-top: 20px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 1em;
-}
-
-.back-btn:hover {
-    text-decoration: underline;
-}
-
 /* 未找到资源提示 */
 .no-result {
     background: rgba(255, 255, 255, 0.9);
@@ -137,13 +98,20 @@ button:hover {
     margin: 20px;
 }
 
-/* 分页样式 */
+/* 分页样式 - 固定底部 */
 .pagination {
-    margin-top: 20px;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .pagination button {
@@ -162,7 +130,7 @@ button:hover {
 }
 
 .pagination span {
-    color: white;
+    color: #333;
     font-size: 1em;
 }
 
@@ -174,19 +142,21 @@ button:hover {
     }
     #searchBox, button {
         width: 100%;
-        max-width: 150px; /* 移动端保持一致宽度 */
+        max-width: 150px;
     }
     h1 {
         font-size: 1.8em;
     }
     .pagination {
-        flex-direction: column; /* 移动端垂直排列 */
+        flex-direction: row; /* 保持水平排列 */
         gap: 5px;
+        padding: 5px 10px;
     }
     .pagination button {
-        width: 100px; /* 按钮固定宽度 */
+        padding: 6px 12px; /* 缩小按钮 */
+        font-size: 0.9em;
     }
     .pagination span {
-        font-size: 0.9em; /* 稍微缩小文字 */
+        font-size: 0.9em;
     }
 }

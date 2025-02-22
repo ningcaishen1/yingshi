@@ -1,12 +1,12 @@
 let resources = [];
 let currentPage = 1;
-const itemsPerPage = 10; // 每页显示 10 条
+const itemsPerPage = 10;
 
 fetch('resources.json')
     .then(response => response.json())
     .then(data => {
         resources = data;
-        searchResources(); // 初始加载时显示第一页
+        searchResources(); // 初始加载第一页
     });
 
 function searchResources() {
@@ -27,7 +27,7 @@ function searchResources() {
         const end = start + itemsPerPage;
         const paginatedItems = filtered.slice(start, end);
 
-        // 显示当前页的资源
+        // 显示当前页资源
         paginatedItems.forEach(resource => {
             const div = document.createElement('div');
             div.className = 'resource-item';
@@ -36,21 +36,27 @@ function searchResources() {
             list.appendChild(div);
         });
 
-        // 添加分页控件
-        const pagination = document.createElement('div');
-        pagination.className = 'pagination';
-        pagination.innerHTML = `
-            <button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>上一页</button>
-            <span>第 ${currentPage} 页 / 共 ${totalPages} 页</span>
-            <button onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>下一页</button>
-        `;
-        list.appendChild(pagination);
+        // 更新分页控件
+        updatePagination(totalPages);
     }
 }
 
 function changePage(page) {
-    currentPage = page;
-    searchResources();
+    const totalPages = Math.ceil(resources.filter(r => r.title.toLowerCase().includes(document.getElementById('searchBox').value.toLowerCase())).length / itemsPerPage);
+    if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        searchResources();
+    }
+}
+
+function updatePagination(totalPages) {
+    const pageInfo = document.getElementById('pageInfo');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    pageInfo.innerText = `${currentPage}/${totalPages}`; // 只显示数字，如 1/1
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage === totalPages;
 }
 
 function showResourceDetails(id) {
