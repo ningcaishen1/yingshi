@@ -2,15 +2,22 @@ let resources = [];
 let currentPage = 1;
 const itemsPerPage = 10;
 
+// 清理输入的函数
+function sanitizeInput(input) {
+    return input.replace(/[<>&"']/g, ''); // 移除 < > & " ' 等危险字符
+}
+
 fetch('resources.json')
     .then(response => response.json())
     .then(data => {
         resources = data;
         searchResources(); // 初始加载第一页
-    });
+    })
+    .catch(error => console.error('加载 JSON 失败:', error));
 
 function searchResources() {
-    const query = document.getElementById('searchBox').value.toLowerCase();
+    let query = document.getElementById('searchBox').value.slice(0, 100).toLowerCase(); // 限制 100 字符
+    query = sanitizeInput(query); // 清理输入
     const filtered = resources.filter(r => r.title.toLowerCase().includes(query));
     const list = document.getElementById('resourceList');
     list.innerHTML = '';
@@ -21,13 +28,11 @@ function searchResources() {
         noResult.innerText = '抱歉，没有找到相关资源！';
         list.appendChild(noResult);
     } else {
-        // 计算分页
         const totalPages = Math.ceil(filtered.length / itemsPerPage);
         const start = (currentPage - 1) * itemsPerPage;
         const end = start + itemsPerPage;
         const paginatedItems = filtered.slice(start, end);
 
-        // 显示当前页资源
         paginatedItems.forEach(resource => {
             const div = document.createElement('div');
             div.className = 'resource-item';
@@ -36,7 +41,6 @@ function searchResources() {
             list.appendChild(div);
         });
 
-        // 更新分页控件
         updatePagination(totalPages);
     }
 }
@@ -54,7 +58,7 @@ function updatePagination(totalPages) {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
 
-    pageInfo.innerText = `${currentPage}/${totalPages}`; // 只显示数字，如 1/1
+    pageInfo.innerText = `${currentPage}/${totalPages}`;
     prevBtn.disabled = currentPage === 1;
     nextBtn.disabled = currentPage === totalPages;
 }
