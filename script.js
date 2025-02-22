@@ -2,11 +2,12 @@ let resources = [];
 let currentPage = 1;
 const itemsPerPage = 10;
 
-// 清理输入的函数
+// 清理输入的函数，防止危险字符
 function sanitizeInput(input) {
-    return input.replace(/[<>&"']/g, ''); // 移除 < > & " ' 等危险字符
+    return input.replace(/[<>&"']/g, ''); // 移除 < > & " ' 等字符
 }
 
+// 加载资源数据
 fetch('resources.json')
     .then(response => response.json())
     .then(data => {
@@ -15,6 +16,7 @@ fetch('resources.json')
     })
     .catch(error => console.error('加载 JSON 失败:', error));
 
+// 搜索资源
 function searchResources() {
     let query = document.getElementById('searchBox').value.slice(0, 100).toLowerCase(); // 限制 100 字符
     query = sanitizeInput(query); // 清理输入
@@ -45,6 +47,7 @@ function searchResources() {
     }
 }
 
+// 切换页面
 function changePage(page) {
     const totalPages = Math.ceil(resources.filter(r => r.title.toLowerCase().includes(document.getElementById('searchBox').value.toLowerCase())).length / itemsPerPage);
     if (page >= 1 && page <= totalPages) {
@@ -53,6 +56,7 @@ function changePage(page) {
     }
 }
 
+// 更新分页信息
 function updatePagination(totalPages) {
     const pageInfo = document.getElementById('pageInfo');
     const prevBtn = document.getElementById('prevBtn');
@@ -63,6 +67,7 @@ function updatePagination(totalPages) {
     nextBtn.disabled = currentPage === totalPages;
 }
 
+// 显示资源详情
 function showResourceDetails(id) {
     fetch('resources.json')
         .then(response => response.json())
@@ -71,7 +76,21 @@ function showResourceDetails(id) {
             if (resource) {
                 document.getElementById('resourceTitle').innerText = resource.title;
                 document.getElementById('resourceDesc').innerText = resource.description;
-                document.getElementById('downloadLink').href = resource.link;
+                const downloadLinksDiv = document.getElementById('downloadLinks');
+                downloadLinksDiv.innerHTML = ''; // 清空现有内容
+                if (!resource.links || resource.links.length === 0) {
+                    downloadLinksDiv.innerHTML = '<p>暂无下载链接</p>';
+                } else {
+                    resource.links.forEach((link, index) => {
+                        const a = document.createElement('a');
+                        a.href = link;
+                        a.target = "_blank";
+                        a.className = "download-btn";
+                        a.innerHTML = `<i class="fas fa-download"></i> 下载资源 ${index + 1}`;
+                        downloadLinksDiv.appendChild(a);
+                    });
+                }
             }
-        });
+        })
+        .catch(error => console.error('加载资源详情失败:', error));
 }
