@@ -12,14 +12,19 @@ fetch('resources.json')
     .then(response => response.json())
     .then(data => {
         resources = data;
-        searchResources(); // 初始加载第一页
+        // 检查 URL 参数，恢复状态
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = urlParams.get('query') || '';
+        const page = parseInt(urlParams.get('page')) || 1;
+        document.getElementById('searchBox').value = query;
+        currentPage = page;
+        searchResources(); // 加载对应页面
     })
     .catch(error => console.error('加载 JSON 失败:', error));
-
 // 搜索资源
 function searchResources() {
-    let query = document.getElementById('searchBox').value.slice(0, 100).toLowerCase(); // 限制 100 字符
-    query = sanitizeInput(query); // 清理输入
+    let query = document.getElementById('searchBox').value.slice(0, 100).toLowerCase();
+    query = sanitizeInput(query);
     const filtered = resources.filter(r => r.title.toLowerCase().includes(query));
     const list = document.getElementById('resourceList');
     list.innerHTML = '';
@@ -39,7 +44,11 @@ function searchResources() {
             const div = document.createElement('div');
             div.className = 'resource-item';
             div.innerText = resource.title;
-            div.onclick = () => window.location.href = `resource.html?id=${resource.id}`;
+            div.onclick = () => {
+                // 保存当前状态到 URL 或 sessionStorage
+                const returnUrl = `index.html?query=${encodeURIComponent(query)}&page=${currentPage}`;
+                window.location.href = `resource.html?id=${resource.id}&return=${encodeURIComponent(returnUrl)}`;
+            };
             list.appendChild(div);
         });
 

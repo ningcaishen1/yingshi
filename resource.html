@@ -14,12 +14,18 @@
             <p id="resourceDesc"></p>
             <div id="downloadLinks"></div>
         </div>
-        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> 返回</a>
+        <a id="backBtn" class="back-btn"><i class="fas fa-arrow-left"></i> 返回</a>
     </div>
     <script src="script.js"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const resourceId = urlParams.get('id');
+        const returnUrl = urlParams.get('return') || 'index.html'; // 默认返回首页
+
+        // 设置返回按钮的 href
+        document.getElementById('backBtn').href = decodeURIComponent(returnUrl);
+
+        // 显示资源详情
         showResourceDetails(resourceId);
     </script>
 </body>
