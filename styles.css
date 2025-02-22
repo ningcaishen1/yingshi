@@ -139,4 +139,13 @@ button:hover {
     h1 {
         font-size: 1.8em;
     }
+}.no-result {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #ff6f61; /* 与按钮颜色一致 */
+    font-size: 1.2em;
+    text-align: center;
+    margin: 20px;
 }
