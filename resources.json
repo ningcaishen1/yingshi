@@ -10,7 +10,17 @@
         "title": "运营商独特渠道流量卡",
         "description": "以前的校园卡。如有需要请联系微信19200047695，以下是介绍页面。",
         "links": [
-            {"url": "https://172.lot-ml.com/ProductEn/Index/fbea121f685c8fa2", "label": "流量卡介绍"}
+            {"url": "https://172.lot-ml.com/ProductEn/Index/40596bc3259f3187", "label": "流量卡介绍"}
+        ],
+        "boldTitle": true
+    },
+    {
+        "id": "3",
+        "title": "美团饿了么试吃官",
+        "description": "部分城市可用，点击进去如果下面显示有商家的话就能使用。",
+        "links": [
+            {"url": "https://offsiteact.meituan.com/act/cps/promotion?p=8b0713d7b1144c0685968c96c990db62", "label": "美团试吃官"},
+            {"url": "https://m.duanqu.com/?_ariver_appid=8251537&page=plugin-private%3A%2F%2F2021003183669766%2Fpages%2Fcomment-poliely-guide%2Findex%3Fscene%3Dcce3272fde274b948a23eabc381aad21", "label": "饿了么霸王餐"}
         ],
         "boldTitle": true
     },
