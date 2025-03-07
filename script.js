@@ -24,7 +24,6 @@ fetch('resources.json')
 
 // 搜索资源
 function searchResources() {
-    currentPage = 1; // Reset to the first page when a new search is performed
     let query = document.getElementById('searchBox').value.slice(0, 100).toLowerCase();
     query = sanitizeInput(query);
     const filtered = query ? resources.filter(r => r.title.toLowerCase().includes(query)) : resources;
