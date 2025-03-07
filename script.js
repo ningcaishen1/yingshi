@@ -12,20 +12,22 @@ fetch('resources.json')
     .then(response => response.json())
     .then(data => {
         resources = data;
+        // 检查 URL 参数，恢复状态
         const urlParams = new URLSearchParams(window.location.search);
         const query = urlParams.get('query') || '';
         const page = parseInt(urlParams.get('page')) || 1;
         document.getElementById('searchBox').value = query;
         currentPage = page;
-        searchResources();
+        searchResources(); // 加载对应页面
     })
     .catch(error => console.error('加载 JSON 失败:', error));
 
 // 搜索资源
 function searchResources() {
+    currentPage = 1; // Reset to the first page when a new search is performed
     let query = document.getElementById('searchBox').value.slice(0, 100).toLowerCase();
     query = sanitizeInput(query);
-    const filtered = resources.filter(r => r.title.toLowerCase().includes(query));
+    const filtered = query ? resources.filter(r => r.title.toLowerCase().includes(query)) : resources;
     const list = document.getElementById('resourceList');
     list.innerHTML = '';
 
@@ -44,6 +46,7 @@ function searchResources() {
             const div = document.createElement('div');
             div.className = 'resource-item';
             div.innerText = resource.title;
+            // 如果 boldTitle 为 true，添加加粗样式
             if (resource.boldTitle) {
                 div.style.fontWeight = 'bold';
             }
@@ -60,10 +63,35 @@ function searchResources() {
 
 // 切换页面
 function changePage(page) {
-    const totalPages = Math.ceil(resources.filter(r => r.title.toLowerCase().includes(document.getElementById('searchBox').value.toLowerCase())).length / itemsPerPage);
+    let query = document.getElementById('searchBox').value.slice(0, 100).toLowerCase();
+    query = sanitizeInput(query);
+    const filtered = resources.filter(r => r.title.toLowerCase().includes(query));
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+
     if (page >= 1 && page <= totalPages) {
         currentPage = page;
-        searchResources();
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const paginatedItems = filtered.slice(start, end);
+
+        const list = document.getElementById('resourceList');
+        list.innerHTML = '';
+
+        paginatedItems.forEach(resource => {
+            const div = document.createElement('div');
+            div.className = 'resource-item';
+            div.innerText = resource.title;
+            if (resource.boldTitle) {
+                div.style.fontWeight = 'bold';
+            }
+            div.onclick = () => {
+                const returnUrl = `index.html?query=${encodeURIComponent(query)}&page=${currentPage}`;
+                window.location.href = `resource.html?id=${resource.id}&return=${encodeURIComponent(returnUrl)}`;
+            };
+            list.appendChild(div);
+        });
+
+        updatePagination(totalPages);
     }
 }
 
@@ -87,6 +115,7 @@ function showResourceDetails(id) {
             if (resource) {
                 const titleElement = document.getElementById('resourceTitle');
                 titleElement.innerText = resource.title;
+                // 如果 boldTitle 为 true，加粗标题
                 if (resource.boldTitle) {
                     titleElement.style.fontWeight = 'bold';
                 }
@@ -101,12 +130,37 @@ function showResourceDetails(id) {
                         a.href = linkObj.url;
                         a.target = "_blank";
                         a.className = "download-btn";
-                        // 添加迅雷图标（使用 Font Awesome 的下载图标）
-                        a.innerHTML = ` ${linkObj.label}`;
+                        a.innerHTML = `${linkObj.label}`;
                         downloadLinksDiv.appendChild(a);
                     });
                 }
             }
         })
         .catch(error => console.error('加载资源详情失败:', error));
+}
+
+function showReminderPopup() {
+    const lastShown = localStorage.getItem('reminderLastShown');
+    const now = new Date().getTime();
+    const oneHour = 1 * 60 * 1000;
+
+    if (!lastShown || now - lastShown > oneHour) {
+        const modal = document.getElementById('reminderModal');
+        modal.style.display = 'block';
+        localStorage.setItem('reminderLastShown', now);
+    }
+}
+
+function closeReminderPopup() {
+    const modal = document.getElementById('reminderModal');
+    modal.style.display = 'none';
+}
+
+// Call the reminder popup function on page load
+document.addEventListener('DOMContentLoaded', showReminderPopup);
+
+function resetToHomePage() {
+    document.getElementById('searchBox').value = ''; // 清空搜索框
+    currentPage = 1; // 重置到第一页
+    searchResources(); // 显示所有资源
 }

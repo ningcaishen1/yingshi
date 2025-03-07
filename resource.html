@@ -19,9 +19,12 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const resourceId = urlParams.get('id');
-        const returnUrl = urlParams.get('return') || 'index.html';
+        const returnUrl = urlParams.get('return') || 'index.html'; // 默认返回首页
 
+        // 设置返回按钮的 href
         document.getElementById('backBtn').href = decodeURIComponent(returnUrl);
+
+        // 显示资源详情
         showResourceDetails(resourceId);
     </script>
 </body>
