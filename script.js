@@ -12,15 +12,15 @@ fetch('resources.json')
     .then(response => response.json())
     .then(data => {
         resources = data;
-        // 检查 URL 参数，恢复状态
         const urlParams = new URLSearchParams(window.location.search);
         const query = urlParams.get('query') || '';
         const page = parseInt(urlParams.get('page')) || 1;
         document.getElementById('searchBox').value = query;
         currentPage = page;
-        searchResources(); // 加载对应页面
+        searchResources();
     })
     .catch(error => console.error('加载 JSON 失败:', error));
+
 // 搜索资源
 function searchResources() {
     let query = document.getElementById('searchBox').value.slice(0, 100).toLowerCase();
@@ -44,7 +44,6 @@ function searchResources() {
             const div = document.createElement('div');
             div.className = 'resource-item';
             div.innerText = resource.title;
-            // 如果 boldTitle 为 true，添加加粗样式
             if (resource.boldTitle) {
                 div.style.fontWeight = 'bold';
             }
@@ -88,7 +87,6 @@ function showResourceDetails(id) {
             if (resource) {
                 const titleElement = document.getElementById('resourceTitle');
                 titleElement.innerText = resource.title;
-                // 如果 boldTitle 为 true，加粗标题
                 if (resource.boldTitle) {
                     titleElement.style.fontWeight = 'bold';
                 }
@@ -103,7 +101,8 @@ function showResourceDetails(id) {
                         a.href = linkObj.url;
                         a.target = "_blank";
                         a.className = "download-btn";
-                        a.innerHTML = `${linkObj.label}`;
+                        // 添加迅雷图标（使用 Font Awesome 的下载图标）
+                        a.innerHTML = ` ${linkObj.label}`;
                         downloadLinksDiv.appendChild(a);
                     });
                 }

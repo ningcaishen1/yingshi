@@ -14,6 +14,8 @@ body {
     padding: 20px;
     text-align: center;
     padding-bottom: 80px;
+    position: relative;
+    z-index: 1; /* 确保低于弹窗 */
 }
 
 h1 {
@@ -86,53 +88,56 @@ button:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* 资源详情页 */
-.resource-card {
+/* 弹窗样式 */
+.popup-overlay {
+    display: none; /* 默认隐藏 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* 半透明背景 */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 确保弹窗在最上层 */
+}
+
+.popup-content {
     background: white;
     padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 20px auto;
-    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
 }
 
-/* 下载按钮 */
-.download-btn {
-    display: inline-block;
-    padding: 15px 30px;
-    background: linear-gradient(135deg, #28c76f, #81fbb8);
-    color: white;
-    text-decoration: none;
-    border-radius: 30px;
+.popup-content h2 {
+    color: #ff6f61;
+    margin-bottom: 20px;
+}
+
+.popup-content p {
+    color: #333;
     font-size: 1.1em;
-    font-weight: bold;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
-.download-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-/* 返回按钮 */
-.back-btn {
-    display: inline-block;
+.popup-close-btn {
     margin-top: 20px;
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    padding: 10px 25px;
+    background: linear-gradient(135deg, #ff6f61, #ff8e7f);
     color: white;
-    text-decoration: none;
-    border-radius: 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
     font-size: 1em;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.back-btn:hover {
-    transform: translateX(-2px);
+.popup-close-btn:hover {
+    transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -184,6 +189,69 @@ button:hover {
     font-size: 1em;
 }
 
+/* 下载按钮 */
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #28c76f, #81fbb8);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 10px;
+}
+
+.download-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+
+
+/* 返回按钮 */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #ff6f61, #ff8e7f);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 1em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 20px;
+}
+
+.back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.back-arrow {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(135deg); /* 旋转形成左箭头 */
+}
+
+/* 资源卡片 */
+.resource-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
 /* 响应式设计 */
 @media (max-width: 600px) {
     .search-bar {
@@ -209,21 +277,22 @@ button:hover {
     .pagination span {
         font-size: 0.9em;
     }
-    .download-btn {
-        padding: 15px 30px;
-        background: linear-gradient(135deg, #28c76f, #81fbb8);
-        color: white;
-        text-decoration: none;
-        border-radius: 30px;
-        font-size: 1.1em;
-        font-weight: bold;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        margin-bottom: 10px;
-        text-align: center; /* 确保文字居中 */
+    .popup-content {
+        padding: 20px;
+        width: 85%;
     }
-    .back-btn {
-        padding: 8px 15px;
+    .popup-content h2 {
+        font-size: 1.5em;
+    }
+    .popup-content p {
+        font-size: 1em;
+    }
+    .popup-close-btn {
+        padding: 8px 20px;
         font-size: 0.9em;
+    }
+    .download-btn {
+        padding: 10px 20px;
+        font-size: 1em;
     }
 }

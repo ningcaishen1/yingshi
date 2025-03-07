@@ -5,9 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>网盘资源搜索</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <!-- 弹窗结构 -->
+    <div id="popupOverlay" class="popup-overlay">
+        <div class="popup-content">
+            <h2>重要提示</h2>
+            <p>欢迎使用网盘资源搜索！</p>
+            <p>本站注重版权，所有资源均采自网络，仅供学习和交流使用。如遇侵权，请联系微信 <strong>19200047695</strong> 删除。</p>
+            <p>请遵守相关法律法规，合理使用资源。</p>
+            <button id="closePopup" class="popup-close-btn">我已了解，继续访问</button>
+        </div>
+    </div>
+
     <div class="container">
         <h1>网盘资源搜索</h1>
         <form id="searchForm" class="search-bar" onsubmit="event.preventDefault(); searchResources();">
@@ -23,5 +33,32 @@
         </div>
     </div>
     <script src="script.js"></script>
+    <script>
+        window.onload = function() {
+            const popup = document.getElementById('popupOverlay');
+            const closePopupBtn = document.getElementById('closePopup');
+            const container = document.querySelector('.container');
+            const lastClosedTime = localStorage.getItem('popupClosedTime');
+            const currentTime = new Date().getTime();
+            const oneHour = 10 * 60 * 1000; // 1小时的毫秒数
+
+            // 初始隐藏主内容
+            container.style.display = 'none';
+
+            // 检查是否需要显示弹窗
+            if (!lastClosedTime || (currentTime - parseInt(lastClosedTime) > oneHour)) {
+                popup.style.display = 'flex'; // 显示弹窗
+            } else {
+                container.style.display = 'block'; // 如果不需要弹窗，直接显示主内容
+            }
+
+            // 关闭弹窗并显示主内容
+            closePopupBtn.addEventListener('click', function() {
+                popup.style.display = 'none';
+                container.style.display = 'block';
+                localStorage.setItem('popupClosedTime', currentTime.toString());
+            });
+        };
+    </script>
 </body>
 </html>
