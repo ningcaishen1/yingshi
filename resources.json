@@ -2,13 +2,13 @@
     {
         "id": "1",
         "title": "本站注重版权资源均采自网络，如遇侵权请联系删除！",
-        "description": "本站注重版权，如遇侵权请联系微信19200047695删除！",
+        "description": "本站注重版权，如遇侵权请联系微信XTX0447删除！",
         "boldTitle": true
     },
     {
         "id": "2",
         "title": "运营商渠道流量卡，29元每月255G流量",
-        "description": "如有需要，部分卡首次充值需要链接请联系微信19200047695，以下是介绍页面。",
+        "description": "如有需要，部分卡首次充值需要链接请联系微信XTX0447，以下是介绍页面。",
         "links": [
             {"url": "https://172.lot-ml.com/ProductEn/Index/40596bc3259f3187", "label": "流量卡介绍"}
         ],
@@ -25,11 +25,67 @@
         "boldTitle": true
     },
     {
-        "id": "9935",
-        "title": "课程简介",
-        "description": "课程简介",
+        "id": "9928",
+        "title": "爱情发芽中（2025）",
+        "description": "爱情发芽中（2025）",
         "links": [
-            {"url": "https://pan.quark.cn/s/b30023fa622b", "label": "夸克网盘"}
+            {"url": "https://pan.xunlei.com/s/VON6U-NsqBx6qhnh2KGgJ7_kA1?pwd=w77k#", "label": "迅雷网盘"}
+        ]
+    },
+    {
+        "id": "9929",
+        "title": "魔女",
+        "description": "魔女",
+        "links": [
+            {"url": "https://pan.xunlei.com/s/VON6RU87_IJYhIi7qQcf499rA1?pwd=23yd#", "label": "迅雷网盘"}
+        ]
+    },
+    {
+        "id": "9930",
+        "title": "燃罪（2025）",
+        "description": "燃罪（2025）",
+        "links": [
+            {"url": "https://pan.xunlei.com/s/VON6R8_20zNGB9eWpfK2Mk3QA1?pwd=sxku#", "label": "迅雷网盘"}
+        ]
+    },
+    {
+        "id": "9931",
+        "title": "我叫赵出息",
+        "description": "我叫赵出息",
+        "links": [
+            {"url": "https://pan.xunlei.com/s/VON6QaC0hui0DFRB5St_I7EoA1?pwd=8k8u#", "label": "迅雷网盘"}
+        ]
+    },
+    {
+        "id": "9932",
+        "title": "仙逆",
+        "description": "仙逆",
+        "links": [
+            {"url": "https://pan.xunlei.com/s/VON6Q6-LRRfQbtjsq40f3WKpA1?pwd=gvzt#", "label": "迅雷网盘"}
+        ]
+    },
+    {
+        "id": "9933",
+        "title": "疾速追杀系列1-4部",
+        "description": "疾速追杀系列1-4部",
+        "links": [
+            {"url": "https://pan.xunlei.com/s/VON6P4t3TbEJtNaW-BXgYDMUA1?pwd=88b6#", "label": "迅雷网盘"}
+        ]
+    },
+    {
+        "id": "9934",
+        "title": "《嘘，国王在冬眠》",
+        "description": "《嘘，国王在冬眠》",
+        "links": [
+            {"url": "https://pan.xunlei.com/s/VON6OdkjOP7H6UqmULPwu43PA1?pwd=nydj#", "label": "迅雷网盘"}
+        ]
+    },
+    {
+        "id": "9935",
+        "title": "敌营十八年",
+        "description": "该剧讲述了解放前，共产党员江波为完成党交给的光荣而艰巨的任务，只身深入虎穴十八年。",
+        "links": [
+            {"url": "https://pan.xunlei.com/s/VON6NanZ9pskaeJj7IWJq5i4A1?pwd=s4xn#", "label": "迅雷网盘"}
         ]
     },
     {
