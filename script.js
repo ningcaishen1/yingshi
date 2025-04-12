@@ -16,9 +16,13 @@ fetch('resources.json')
     const urlParams = new URLSearchParams(window.location.search);
     const query = urlParams.get('query') || '';
     const page = parseInt(urlParams.get('page')) || 1;
-    document.getElementById('searchBox').value = query;
     currentPage = page;
-    searchResources(); // 加载对应页面
+
+    // 等待 DOM 加载完成后设置 searchBox 的值并调用 searchResources
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('searchBox').value = query;
+      searchResources(); // 加载对应页面
+    });
   })
   .catch(error => console.error('加载 JSON 失败:', error));
 
@@ -55,34 +59,32 @@ function renderResourceList(resources) {
 
 // 搜索资源
 function searchResources() {
-    let query = document.getElementById('searchBox').value.slice(0, 100).toLowerCase();
-    query = sanitizeInput(query);
-    const filtered = query ? resources.filter(r => r.title.toLowerCase().includes(query)) : resources;
-    const totalPages = Math.ceil(filtered.length / itemsPerPage);
-  
-    // ** 关键修改：如果执行了搜索，则重置 currentPage 为 1
-    if (query) {
-      currentPage = 1;
-    }
-  
-    updatePagination(totalPages); // 更新分页按钮状态
-  
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    const paginatedItems = filtered.slice(start, end);
-  
-    renderResourceList(paginatedItems);
+  let query = document.getElementById('searchBox').value.slice(0, 100).toLowerCase();
+  query = sanitizeInput(query);
+  const filtered = query ? resources.filter(r => r.title.toLowerCase().includes(query)) : resources;
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+
+  // 如果执行了搜索，则重置 currentPage 为 1
+  if (query) {
+    currentPage = 1;
   }
-  
-  
-  // 切换页面
-  function changePage(page) {
-    if (page >= 1) {
-      currentPage = page;
-      searchResources(); // 重复搜索来加载对应页面
-    }
+
+  updatePagination(totalPages); // 更新分页按钮状态
+
+  const start = (currentPage - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const paginatedItems = filtered.slice(start, end);
+
+  renderResourceList(paginatedItems);
+}
+
+// 切换页面
+function changePage(page) {
+  if (page >= 1) {
+    currentPage = page;
+    searchResources(); // 重复搜索来加载对应页面
   }
-  
+}
 
 // 更新分页信息
 function updatePagination(totalPages) {
@@ -130,7 +132,7 @@ function showResourceDetails(id) {
 function showReminderPopup() {
   const lastShown = localStorage.getItem('reminderLastShown');
   const now = new Date().getTime();
-  const oneHour = 5* 60 * 60 * 1000; // 5 分钟
+  const oneHour = 5 * 60 * 60 * 1000; // 5 分钟
   if (!lastShown || now - lastShown > oneHour) {
     const modal = document.getElementById('reminderModal');
     modal.style.display = 'block';
@@ -143,10 +145,9 @@ function closeReminderPopup() {
   modal.style.display = 'none';
 }
 
-// Call the reminder popup function on page load
+// 在页面加载完成后调用相关函数
 document.addEventListener('DOMContentLoaded', () => {
-    searchResources();
-    showReminderPopup();
+  showReminderPopup();
 });
 
 function resetToHomePage() {
