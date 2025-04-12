@@ -126,7 +126,7 @@ function showResourceDetails(id) {
         console.warn('未找到资源，ID:', id); // 调试日志
         const downloadLinksDiv = document.getElementById('downloadLinks');
         if (downloadLinksDiv) {
-          downloadLinksDiv.innerHTML = '<div class="no-result">未找到该资源。</div>';
+          downloadLinksDiv.innerHTML = '<div class="no-result">未找到该资源，请联系微信：XTX0447，加群。群中资源更多。</div>';
         }
       }
     })
