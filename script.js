@@ -2,14 +2,18 @@ let resources = [];
 let currentPage = 1;
 const itemsPerPage = 10;
 
+// 清理输入，防止危险字符
 function sanitizeInput(input) {
   return input.replace(/[<>&"']/g, '');
 }
 
+// 渲染资源列表
 function renderResourceList(resources) {
   const list = document.getElementById('resourceList');
   if (!list) return; // 防止在 resource.html 中执行
   list.innerHTML = '';
+
+  console.log('渲染资源列表，资源数量:', resources.length); // 调试日志
 
   if (resources.length === 0) {
     const noResult = document.createElement('div');
@@ -36,13 +40,14 @@ function renderResourceList(resources) {
   });
 }
 
+// 搜索资源
 function searchResources() {
   const searchBox = document.getElementById('searchBox');
   if (!searchBox) return; // 防止在 resource.html 中执行
   let query = searchBox.value.slice(0, 100).toLowerCase();
   query = sanitizeInput(query);
   const filtered = query ? resources.filter(r => r.title.toLowerCase().includes(query)) : resources;
-  console.log('资源总数:', resources.length, '过滤后数量:', filtered.length, '当前页:', currentPage);
+  console.log('搜索资源 - 总资源:', resources.length, '过滤后:', filtered.length, '当前页:', currentPage); // 调试日志
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
 
   if (query) {
@@ -58,6 +63,7 @@ function searchResources() {
   renderResourceList(paginatedItems);
 }
 
+// 切换页面
 function changePage(page) {
   if (page >= 1) {
     currentPage = page;
@@ -65,6 +71,7 @@ function changePage(page) {
   }
 }
 
+// 更新分页信息
 function updatePagination(totalPages) {
   const pageInfo = document.getElementById('pageInfo');
   if (!pageInfo) return; // 防止在 resource.html 中执行
@@ -75,6 +82,7 @@ function updatePagination(totalPages) {
   nextBtn.disabled = currentPage === totalPages;
 }
 
+// 显示资源详情
 function showResourceDetails(id) {
   fetch('resources.json')
     .then(response => {
@@ -84,6 +92,7 @@ function showResourceDetails(id) {
       return response.json();
     })
     .then(data => {
+      console.log('资源详情数据加载完成，ID:', id); // 调试日志
       const resource = data.find(r => r.id == id);
       if (resource) {
         const titleElement = document.getElementById('resourceTitle');
@@ -113,6 +122,12 @@ function showResourceDetails(id) {
             });
           }
         }
+      } else {
+        console.warn('未找到资源，ID:', id); // 调试日志
+        const downloadLinksDiv = document.getElementById('downloadLinks');
+        if (downloadLinksDiv) {
+          downloadLinksDiv.innerHTML = '<div class="no-result">未找到该资源。</div>';
+        }
       }
     })
     .catch(error => {
@@ -124,18 +139,20 @@ function showResourceDetails(id) {
     });
 }
 
+// 显示提醒弹窗
 function showReminderPopup() {
   const modal = document.getElementById('reminderModal');
   if (!modal) return; // 防止在 resource.html 中执行
   const lastShown = localStorage.getItem('reminderLastShown');
   const now = new Date().getTime();
-  const oneHour = 5 * 60 * 60 * 1000;
+  const oneHour = 5 * 60 * 60 * 1000; // 5 小时
   if (!lastShown || now - lastShown > oneHour) {
     modal.style.display = 'block';
     localStorage.setItem('reminderLastShown', now);
   }
 }
 
+// 关闭提醒弹窗
 function closeReminderPopup() {
   const modal = document.getElementById('reminderModal');
   if (modal) {
@@ -143,6 +160,7 @@ function closeReminderPopup() {
   }
 }
 
+// 重置到首页
 function resetToHomePage() {
   const searchBox = document.getElementById('searchBox');
   if (!searchBox) return; // 防止在 resource.html 中执行
@@ -151,30 +169,39 @@ function resetToHomePage() {
   searchResources();
 }
 
+// 页面加载时初始化
 document.addEventListener('DOMContentLoaded', () => {
-  // 检查是否为 index.html
+  // 仅在 index.html 中执行搜索相关逻辑
   if (document.getElementById('searchBox') && document.getElementById('resourceList')) {
+    console.log('开始加载 index.html'); // 调试日志
     fetch('resources.json')
       .then(response => {
+        console.log('fetch 状态:', response.status); // 调试日志
         if (!response.ok) {
           throw new Error('无法加载 resources.json，状态码: ' + response.status);
         }
         return response.json();
       })
       .then(data => {
+        console.log('资源数据加载完成，长度:', data.length); // 调试日志
         resources = data;
         const urlParams = new URLSearchParams(window.location.search);
         const query = urlParams.get('query') || '';
         const page = parseInt(urlParams.get('page')) || 1;
         currentPage = page;
-        document.getElementById('searchBox').value = query;
+        const searchBox = document.getElementById('searchBox');
+        if (searchBox) {
+          searchBox.value = query;
+        }
         searchResources();
       })
       .catch(error => {
         console.error('加载 JSON 失败:', error);
-        document.getElementById('resourceList').innerHTML = '<div class="no-result">加载资源失败，请检查网络或文件路径。</div>';
+        const resourceList = document.getElementById('resourceList');
+        if (resourceList) {
+          resourceList.innerHTML = '<div class="no-result">加载资源失败，请检查网络或文件路径。</div>';
+        }
       });
     showReminderPopup();
   }
-  // resource.html 的逻辑在 resource.html 自身的 <script> 中处理
 });
