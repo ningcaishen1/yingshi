@@ -9,7 +9,8 @@
 <body>
     <div class="container">
         <h1>想看点啥？</h1>
-        <form id="searchForm" class="search-bar" onsubmit="event.preventDefault(); searchResources();">
+        <!-- 修改 onsubmit 事件 -->
+        <form id="searchForm" class="search-bar" onsubmit="event.preventDefault(); handleSearch();">
             <input type="search" id="searchBox" placeholder="输入关键词搜索..." maxlength="100">
             <button type="submit"><i class="fas fa-search"></i> 搜索</button>
         </form>

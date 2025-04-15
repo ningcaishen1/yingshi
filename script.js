@@ -43,17 +43,12 @@ function renderResourceList(resources) {
 // 搜索资源
 function searchResources() {
   const searchBox = document.getElementById('searchBox');
-  if (!searchBox) return; // 防止在 resource.html 中执行
+  if (!searchBox) return;
   let query = searchBox.value.slice(0, 100).toLowerCase();
   query = sanitizeInput(query);
   const filtered = query ? resources.filter(r => r.title.toLowerCase().includes(query)) : resources;
-  console.log('搜索资源 - 总资源:', resources.length, '过滤后:', filtered.length, '当前页:', currentPage); // 调试日志
+  
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
-
-  if (query) {
-    currentPage = 1;
-  }
-
   updatePagination(totalPages);
 
   const start = (currentPage - 1) * itemsPerPage;
@@ -71,15 +66,20 @@ function changePage(page) {
   }
 }
 
+function handleSearch() {
+  currentPage = 1; // 仅在主动搜索时重置页码
+  searchResources();
+}
+
 // 更新分页信息
 function updatePagination(totalPages) {
   const pageInfo = document.getElementById('pageInfo');
-  if (!pageInfo) return; // 防止在 resource.html 中执行
+  if (!pageInfo) return;
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
   pageInfo.innerText = `${currentPage}/${totalPages}`;
   prevBtn.disabled = currentPage === 1;
-  nextBtn.disabled = currentPage === totalPages;
+  nextBtn.disabled = currentPage >= totalPages; // 使用 >= 更安全
 }
 
 // 显示资源详情
