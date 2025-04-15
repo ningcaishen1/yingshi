@@ -48,7 +48,7 @@ function searchResources() {
   query = sanitizeInput(query);
   const filtered = query ? resources.filter(r => r.title.toLowerCase().includes(query)) : resources;
   
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage)); // 确保总页数至少为1
   updatePagination(totalPages);
 
   const start = (currentPage - 1) * itemsPerPage;
@@ -79,7 +79,7 @@ function updatePagination(totalPages) {
   const nextBtn = document.getElementById('nextBtn');
   pageInfo.innerText = `${currentPage}/${totalPages}`;
   prevBtn.disabled = currentPage === 1;
-  nextBtn.disabled = currentPage >= totalPages; // 使用 >= 更安全
+  nextBtn.disabled = currentPage >= totalPages || totalPages === 0;
 }
 
 // 显示资源详情
