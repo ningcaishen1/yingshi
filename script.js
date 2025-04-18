@@ -18,7 +18,7 @@ function renderResourceList(resources) {
   if (resources.length === 0) {
     const noResult = document.createElement('div');
     noResult.className = 'no-result';
-    noResult.innerText = '抱歉，没有找到相关资源！';
+    noResult.innerText = '无相关资源！可联系V：XTX0447反馈添加！';
     list.appendChild(noResult);
     return;
   }
